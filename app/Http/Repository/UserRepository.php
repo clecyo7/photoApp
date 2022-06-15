@@ -36,15 +36,24 @@ class UserRepository
 
     public function create(Request $request)
     {
-        $user = User::Create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password'))
-        ]);
-        $user->save();
-        // $user = User::create($request->all());
-         return $user;
+        if (empty($request->input('name')) || empty($request->input('email')) || empty($request->input('password'))) {
+            return response()->json(['status' => 'error', 'message' => 'Dados incompletos.']);
+          }
+          try {
+            $user = User::Create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password'))
+            ]);
+            $user->save();
+            // $user = User::create($request->all());
+             return $user;
+            } catch (\Exception $e) {
+                return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+            }
     }
+
+
 
 
     public function update(Request $request, $id)

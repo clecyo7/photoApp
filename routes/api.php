@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\PhotoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -23,14 +23,7 @@ Route::post('userCreate',[ UserController::class, 'store']);
 
 Route::middleware('auth:api')->group(function () {
     Route::resource('user', UserController::class);
-
+    Route::resource('photo', PhotoController::class);
+    Route::resource('event', EventController::class);
 });
 
-// Route::post('login', function(Request $request){
-//     if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-//         $user = Auth::user();
-//         $token = $user->createToken('JWT');
-//         return response()->json($token);
-//     }
-//     return response()->json('Usuário invalido', 401);
-// });
