@@ -16,11 +16,18 @@ class EventRepository
         return $event->get();
     }
 
+    // public function show($id)
+    // {
+    //     $event = Event::where('id', $id)->first();
+    //     return $event;
+    // }
+
     public function show($id)
     {
-        $event = Event::find($id);
-        return $event;
+        $event = Event::where('id', $id)->first();
+      return response()->json($event, 200);
     }
+
 
     public function create(Request $request)
     {
