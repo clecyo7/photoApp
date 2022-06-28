@@ -12,20 +12,19 @@ class EventRepository
 
     public function list(Request $request, $paginate = true)
     {
-        $event = Event::orderBy('date');
-        return $event->get();
+        $event = Event::orderBy('date')->get();
+        foreach ($event as $data) {
+            $data['status'] == 1 ? $data['status'] = 'Confirmado' : $data['status'] = 'Não Confirmado';
+        }
+
+        return response()->json($event);
     }
 
-    // public function show($id)
-    // {
-    //     $event = Event::where('id', $id)->first();
-    //     return $event;
-    // }
 
     public function show($id)
     {
         $event = Event::where('id', $id)->first();
-      return response()->json($event, 200);
+        return response()->json($event);
     }
 
 
